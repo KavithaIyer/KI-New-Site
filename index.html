@@ -1276,14 +1276,26 @@
 
 
 <script>
-  function showSection(id) {
+  function showSection(id, pushState) {
     document.querySelectorAll('section').forEach(s => s.classList.remove('active'));
     const target = document.getElementById(id);
     if (target) {
       target.classList.add('active');
       window.scrollTo({ top: 0, behavior: 'smooth' });
+      if (pushState !== false) {
+        var path = id === 'home' ? '/' : '/' + id;
+        history.pushState(null, '', path);
+      }
     }
   }
+
+  function handleRoute() {
+    var path = location.pathname.replace(/^\//, '') || 'home';
+    showSection(path, false);
+  }
+
+  window.addEventListener('popstate', handleRoute);
+  handleRoute();
 </script>
 </body>
 </html>
