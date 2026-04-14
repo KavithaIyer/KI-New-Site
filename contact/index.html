@@ -99,22 +99,25 @@
         </div>
       </div>
     </div>
-    <div>
+    <form action="https://api.web3forms.com/submit" method="POST">
+      <input type="hidden" name="access_key" value="fcd133b1-0ce7-407e-8de6-db3653afa8a4">
+      <input type="hidden" name="subject" value="New enquiry from kavithaiyer.com">
+      <input type="hidden" name="redirect" value="https://www.kavithaiyer.com/contact?sent=1">
       <div class="form-field">
         <label>Your Name</label>
-        <input type="text" placeholder="Full name">
+        <input type="text" name="name" placeholder="Full name" required>
       </div>
       <div class="form-field">
         <label>Organisation</label>
-        <input type="text" placeholder="Organisation or institution">
+        <input type="text" name="organisation" placeholder="Organisation or institution">
       </div>
       <div class="form-field">
         <label>Email</label>
-        <input type="email" placeholder="your@email.com">
+        <input type="email" name="email" placeholder="your@email.com" required>
       </div>
       <div class="form-field">
         <label>I am reaching out about</label>
-        <select>
+        <select name="subject_area">
           <option value="">Select...</option>
           <option>Individual Executive Coaching</option>
           <option>Team or Organisational Work</option>
@@ -125,10 +128,10 @@
       </div>
       <div class="form-field">
         <label>Message</label>
-        <textarea placeholder="Please share a little about your context and what you are looking for..."></textarea>
+        <textarea name="message" placeholder="Please share a little about your context and what you are looking for..."></textarea>
       </div>
-      <button class="form-submit">Send Message</button>
-    </div>
+      <button type="submit" class="form-submit">Send Message</button>
+    </form>
   </div>
 </section>
 
