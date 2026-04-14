@@ -4,30 +4,612 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>Kavitha Iyer — Executive Coach & Writer</title>
-<meta name="description" content="Senior executive coach and writer based in Singapore. 25+ years accompanying C-suite leaders through identity, transition, and transformation.">
-<link rel="canonical" href="https://www.kavithaiyer.com/">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,500;0,600;1,300;1,400;1,500&family=Jost:wght@300;400;500&display=swap" rel="stylesheet">
-<link rel="stylesheet" href="/styles.css">
+<style>
+  :root {
+    --cream: #FAF8F4;
+    --warm-white: #F5F2EC;
+    --charcoal: #1C1C1C;
+    --deep: #2A2A2A;
+    --mid: #5A5A5A;
+    --light: #9A9A9A;
+    --accent: #7A8C6E;
+    --accent-warm: #B5704A;
+    --accent-gold: #C4A882;
+    --rule: #E0DAD0;
+    --serif: 'Cormorant Garamond', Georgia, serif;
+    --sans: 'Jost', sans-serif;
+  }
+
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+  html { scroll-behavior: smooth; }
+
+  body {
+    font-family: var(--sans);
+    background: var(--cream);
+    color: var(--charcoal);
+    font-size: 16px;
+    line-height: 1.7;
+    font-weight: 300;
+  }
+
+  /* ── NAV ── */
+  nav {
+    position: fixed; top: 0; left: 0; right: 0; z-index: 100;
+    background: rgba(250,248,244,0.96);
+    backdrop-filter: blur(8px);
+    border-bottom: 1px solid var(--rule);
+    padding: 0 5vw;
+    display: flex; align-items: center; justify-content: space-between;
+    height: 68px;
+  }
+
+  .nav-logo { cursor: pointer; text-decoration: none; display: flex; flex-direction: column; gap: 0.4rem; }
+  .nav-logo-name {
+    font-family: var(--serif);
+    font-size: 1.25rem; font-weight: 500; letter-spacing: 0.04em;
+    color: var(--charcoal); display: block; line-height: 1;
+  }
+  .nav-logo-sub {
+    font-family: var(--sans);
+    font-size: 0.52rem; font-weight: 400; letter-spacing: 0.16em;
+    text-transform: uppercase; color: var(--light); display: block; line-height: 1;
+  }
+
+  .nav-links { display: flex; gap: 2.5rem; list-style: none; }
+  .nav-links a {
+    font-size: 0.72rem; font-weight: 400; letter-spacing: 0.12em;
+    text-transform: uppercase; color: var(--mid); text-decoration: none;
+    cursor: pointer; transition: color 0.2s;
+  }
+  .nav-links a:hover { color: var(--charcoal); }
+
+  .nav-cta {
+    font-size: 0.68rem; font-weight: 500; letter-spacing: 0.14em;
+    text-transform: uppercase; color: var(--cream); background: var(--charcoal);
+    padding: 0.6rem 1.4rem; cursor: pointer; border: none; transition: background 0.2s;
+  }
+  .nav-cta:hover { background: var(--accent); }
+
+  section { display: none; }
+  section.active { display: block; }
+
+  /* ── SHARED BUTTONS ── */
+  .btn-primary {
+    font-size: 0.72rem; font-weight: 500; letter-spacing: 0.14em;
+    text-transform: uppercase; color: var(--cream); background: var(--charcoal);
+    padding: 0.9rem 2rem; cursor: pointer; display: inline-block;
+    border: none; transition: background 0.2s;
+  }
+  .btn-primary:hover { background: var(--accent); }
+
+  .btn-ghost {
+    font-size: 0.72rem; font-weight: 400; letter-spacing: 0.14em;
+    text-transform: uppercase; color: var(--mid); cursor: pointer;
+    background: none; border: none; border-bottom: 1px solid var(--rule);
+    padding-bottom: 2px; transition: color 0.2s, border-color 0.2s;
+  }
+  .btn-ghost:hover { color: var(--charcoal); border-bottom-color: var(--charcoal); }
+
+  .inline-link {
+    font-size: 0.66rem; font-weight: 500; letter-spacing: 0.14em;
+    text-transform: uppercase; color: var(--charcoal); background: none;
+    border: none; border-bottom: 1px solid var(--charcoal);
+    padding-bottom: 1px; display: inline-block; margin-top: 1rem;
+    cursor: pointer; transition: color 0.2s, border-color 0.2s;
+  }
+  .inline-link:hover { color: var(--accent); border-bottom-color: var(--accent); }
+
+  /* ══════════════════════════════════════════
+     TREE OF LIFE SVG — reusable component
+     Used on About, Work, Writing, Contact page headers
+  ══════════════════════════════════════════ */
+  .page-tree-container {
+    width: 260px;
+    height: 310px;
+    flex-shrink: 0;
+    opacity: 0.92;
+  }
+
+  /* ── INNER PAGE HEADER (with tree) ── */
+  .page-header {
+    padding: 5.5rem 8vw 3.5rem;
+    border-bottom: 1px solid var(--rule);
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 4rem;
+    align-items: end;
+    position: relative;
+    overflow: hidden;
+  }
+
+  /* Faint large tree watermark behind page header */
+  .page-header::before {
+    content: '';
+    position: absolute;
+    right: 6vw;
+    bottom: -20px;
+    width: 220px;
+    height: 260px;
+    opacity: 0.06;
+    background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 220 260'%3E%3Cpath d='M110 255 Q110 200 110 170 Q110 140 110 120' stroke='%237A8C6E' stroke-width='3' fill='none'/%3E%3Cpath d='M110 170 Q85 145 55 150 Q40 155 45 170 Q55 185 85 178 Q100 173 110 170' fill='%237A8C6E'/%3E%3Cpath d='M110 170 Q135 145 165 150 Q180 155 175 170 Q165 185 135 178 Q120 173 110 170' fill='%237A8C6E'/%3E%3Cpath d='M110 140 Q82 112 48 118 Q30 124 35 142 Q45 158 78 150 Q97 144 110 140' fill='%237A8C6E'/%3E%3Cpath d='M110 140 Q138 112 172 118 Q190 124 185 142 Q175 158 142 150 Q123 144 110 140' fill='%237A8C6E'/%3E%3Cpath d='M110 115 Q88 88 62 92 Q48 98 52 114 Q60 128 88 122 Q102 117 110 115' fill='%237A8C6E'/%3E%3Cpath d='M110 115 Q132 88 158 92 Q172 98 168 114 Q160 128 132 122 Q118 117 110 115' fill='%237A8C6E'/%3E%3Cpath d='M110 90 Q95 68 75 72 Q62 78 66 92 Q72 104 94 98 Q104 94 110 90' fill='%237A8C6E'/%3E%3Cpath d='M110 90 Q125 68 145 72 Q158 78 154 92 Q148 104 126 98 Q116 94 110 90' fill='%237A8C6E'/%3E%3Cpath d='M110 68 Q100 50 85 53 Q76 58 79 70 Q84 80 100 75 Q106 72 110 68' fill='%237A8C6E'/%3E%3Cpath d='M110 68 Q120 50 135 53 Q144 58 141 70 Q136 80 120 75 Q114 72 110 68' fill='%237A8C6E'/%3E%3Ccircle cx='110' cy='50' r='14' fill='%237A8C6E'/%3E%3Cpath d='M110 255 Q85 245 65 250' stroke='%237A8C6E' stroke-width='2' fill='none' stroke-opacity='0.5'/%3E%3Cpath d='M110 255 Q135 245 155 250' stroke='%237A8C6E' stroke-width='2' fill='none' stroke-opacity='0.5'/%3E%3Cpath d='M110 255 Q95 248 78 255' stroke='%237A8C6E' stroke-width='1.5' fill='none' stroke-opacity='0.35'/%3E%3Cpath d='M110 255 Q125 248 142 255' stroke='%237A8C6E' stroke-width='1.5' fill='none' stroke-opacity='0.35'/%3E%3C/svg%3E");
+    background-size: contain;
+    background-repeat: no-repeat;
+    background-position: bottom center;
+    pointer-events: none;
+  }
+
+  .page-eyebrow {
+    font-size: 0.62rem; font-weight: 500; letter-spacing: 0.2em;
+    text-transform: uppercase; color: var(--accent); margin-bottom: 1.5rem;
+  }
+
+  .page-title {
+    font-family: var(--serif);
+    font-size: clamp(2.4rem, 4vw, 3.8rem);
+    font-weight: 300; line-height: 1.1; color: var(--charcoal);
+  }
+  .page-title em { font-style: italic; color: var(--accent); }
+
+  .page-header-right {
+    font-family: var(--serif);
+    font-size: 1.15rem; font-weight: 300; font-style: italic;
+    color: var(--mid); line-height: 1.65;
+    display: flex; align-items: flex-end; gap: 2.5rem;
+  }
+
+  /* ══════════════════════════════════════════
+     HOME
+  ══════════════════════════════════════════ */
+  #home { padding-top: 68px; }
+
+  /* CRESCA BAND */
+  .cresca-band {
+    background: var(--charcoal);
+    padding: 1rem 8vw;
+    display: flex; align-items: baseline; gap: 2rem; flex-wrap: wrap;
+  }
+  .cresca-wordmark {
+    font-family: var(--serif);
+    font-size: 1rem; font-weight: 500; letter-spacing: 0.12em;
+    text-transform: uppercase; color: var(--cream); flex-shrink: 0;
+  }
+  .cresca-divider {
+    width: 1px; height: 14px; background: rgba(255,255,255,0.2);
+    flex-shrink: 0; align-self: center;
+  }
+  .cresca-etymology {
+    font-family: var(--serif);
+    font-size: 0.86rem; font-style: italic;
+    color: rgba(250,248,244,0.5); letter-spacing: 0.04em; flex: 1;
+  }
+  .cresca-meaning {
+    font-size: 0.6rem; font-weight: 400; letter-spacing: 0.16em;
+    text-transform: uppercase; color: var(--accent); flex-shrink: 0;
+  }
+
+  /* HERO — 3 col */
+  .hero {
+    display: grid;
+    grid-template-columns: 1fr 380px 1fr;
+    min-height: calc(100vh - 68px - 44px);
+    border-bottom: 1px solid var(--rule);
+  }
+
+  .hero-left {
+    padding: 7vw 5vw 6vw 8vw;
+    display: flex; flex-direction: column; justify-content: center;
+    border-right: 1px solid var(--rule);
+  }
+
+  .hero-eyebrow {
+    font-size: 0.66rem; font-weight: 500; letter-spacing: 0.2em;
+    text-transform: uppercase; color: var(--accent); margin-bottom: 2rem;
+  }
+
+  .hero-title {
+    font-family: var(--serif);
+    font-size: clamp(2.6rem, 4vw, 4rem);
+    font-weight: 300; line-height: 1.12; color: var(--charcoal); margin-bottom: 2rem;
+  }
+  .hero-title em { font-style: italic; color: var(--accent); }
+
+  .hero-sub {
+    font-size: 0.92rem; font-weight: 300; color: var(--mid);
+    line-height: 1.9; max-width: 420px; margin-bottom: 3rem;
+  }
+
+  .hero-actions { display: flex; gap: 1.5rem; align-items: center; flex-wrap: wrap; }
+
+  /* HERO VISUAL — v3 botanical */
+  .hero-visual {
+    position: relative; overflow: hidden;
+    background: var(--warm-white);
+    border-right: 1px solid var(--rule);
+    display: flex; align-items: stretch;
+  }
+  .hero-visual svg { width: 100%; height: 100%; display: block; }
+  .hero-visual-caption {
+    position: absolute; bottom: 2rem; left: 50%; transform: translateX(-50%);
+    font-family: var(--serif); font-size: 0.8rem; font-style: italic;
+    color: rgba(90,90,90,0.5); white-space: nowrap; letter-spacing: 0.05em;
+  }
+
+  /* HERO RIGHT */
+  .hero-right {
+    padding: 7vw 8vw 6vw 5vw;
+    display: flex; flex-direction: column; justify-content: center;
+  }
+  .hero-card { border-top: 1px solid var(--rule); padding: 1.6rem 0; }
+  .hero-card:last-child { border-bottom: 1px solid var(--rule); }
+  .hero-card-label {
+    font-size: 0.6rem; font-weight: 500; letter-spacing: 0.18em;
+    text-transform: uppercase; color: var(--accent); margin-bottom: 0.6rem;
+  }
+  .hero-card-title {
+    font-family: var(--serif);
+    font-size: 1.2rem; font-weight: 400; color: var(--charcoal);
+    margin-bottom: 0.45rem; line-height: 1.3;
+  }
+  .hero-card p { font-size: 0.84rem; color: var(--mid); line-height: 1.75; }
+
+  /* TESTIMONIAL */
+  .testimonial-strip {
+    background: var(--warm-white); border-bottom: 1px solid var(--rule);
+    padding: 4rem 8vw;
+    display: grid; grid-template-columns: 120px 1fr; gap: 4rem; align-items: start;
+  }
+  .testimonial-strip-label {
+    font-size: 0.6rem; font-weight: 500; letter-spacing: 0.2em;
+    text-transform: uppercase; color: var(--accent); padding-top: 0.5rem;
+  }
+  .testimonial-quote {
+    font-family: var(--serif);
+    font-size: 1.4rem; font-weight: 300; font-style: italic;
+    color: var(--charcoal); line-height: 1.55;
+  }
+  .testimonial-attribution {
+    font-size: 0.66rem; color: var(--light); letter-spacing: 0.1em;
+    margin-top: 1rem; text-transform: uppercase;
+  }
+
+  /* INSTITUTIONS BAR */
+  .institutions-bar {
+    border-bottom: 1px solid var(--rule);
+    display: grid; grid-template-columns: repeat(3, 1fr);
+  }
+  .institution-cell {
+    padding: 2rem 2.5rem;
+    border-right: 1px solid var(--rule);
+    display: flex; flex-direction: column; gap: 0.4rem;
+  }
+  .institution-cell:last-child { border-right: none; }
+  .institution-role {
+    font-size: 0.58rem; font-weight: 500; letter-spacing: 0.18em;
+    text-transform: uppercase; color: var(--accent);
+  }
+  .institution-name {
+    font-family: var(--serif);
+    font-size: 1.1rem; font-weight: 400; color: var(--charcoal); line-height: 1.2;
+  }
+  .institution-detail { font-size: 0.76rem; color: var(--mid); line-height: 1.4; }
+
+  /* ══════════════════════════════════════════
+     ABOUT
+  ══════════════════════════════════════════ */
+  #about { padding-top: 68px; }
+
+  .content-body {
+    padding: 5rem 8vw;
+    display: grid; grid-template-columns: 200px 1fr; gap: 5rem;
+  }
+  .content-sidebar { position: sticky; top: 88px; align-self: start; }
+  .sidebar-nav { list-style: none; }
+  .sidebar-nav li { border-bottom: 1px solid var(--rule); }
+  .sidebar-nav a {
+    display: block; padding: 0.85rem 0;
+    font-size: 0.68rem; font-weight: 400; letter-spacing: 0.1em;
+    text-transform: uppercase; color: var(--mid); text-decoration: none; transition: color 0.2s;
+  }
+  .sidebar-nav a:hover { color: var(--charcoal); }
+
+  .prose-section { margin-bottom: 4rem; padding-bottom: 4rem; border-bottom: 1px solid var(--rule); }
+  .prose-section:last-child { border-bottom: none; margin-bottom: 0; }
+  .prose-section-label {
+    font-size: 0.58rem; font-weight: 500; letter-spacing: 0.2em;
+    text-transform: uppercase; color: var(--accent); margin-bottom: 1.2rem;
+  }
+  .prose-section h3 {
+    font-family: var(--serif);
+    font-size: 1.65rem; font-weight: 400; color: var(--charcoal);
+    margin-bottom: 1.5rem; line-height: 1.3;
+  }
+  .prose-section p {
+    font-size: 0.92rem; color: var(--deep); line-height: 1.9;
+    margin-bottom: 1.2rem; font-weight: 300;
+  }
+  .prose-section p:last-child { margin-bottom: 0; }
+
+  blockquote {
+    border-left: 2px solid var(--accent);
+    padding: 0.3rem 0 0.3rem 1.5rem; margin: 2rem 0;
+  }
+  blockquote p {
+    font-family: var(--serif); font-size: 1.08rem; font-style: italic;
+    color: var(--mid); margin-bottom: 0 !important;
+  }
+
+  .credential-grid {
+    display: grid; grid-template-columns: 1fr 1fr;
+    gap: 1px; background: var(--rule); border: 1px solid var(--rule); margin-top: 2rem;
+  }
+  .credential-cell { background: var(--cream); padding: 1.4rem; }
+  .credential-cell-label {
+    font-size: 0.56rem; font-weight: 500; letter-spacing: 0.15em;
+    text-transform: uppercase; color: var(--light); margin-bottom: 0.4rem;
+  }
+  .credential-cell-value {
+    font-family: var(--serif); font-size: 1rem; font-weight: 400;
+    color: var(--charcoal); line-height: 1.4;
+  }
+  .credential-cell-detail { font-size: 0.76rem; color: var(--mid); margin-top: 0.2rem; }
+
+  /* ══════════════════════════════════════════
+     WORK
+  ══════════════════════════════════════════ */
+  #work { padding-top: 68px; }
+
+  .services-grid {
+    display: grid; grid-template-columns: repeat(3, 1fr);
+    gap: 1px; background: var(--rule);
+    border-top: 1px solid var(--rule); border-bottom: 1px solid var(--rule);
+  }
+  .service-card { background: var(--cream); padding: 3rem 2.5rem; transition: background 0.2s; }
+  .service-card:hover { background: var(--warm-white); }
+  .service-number {
+    font-family: var(--serif); font-size: 2.6rem; font-weight: 300;
+    color: var(--rule); margin-bottom: 1.5rem; line-height: 1;
+  }
+  .service-title {
+    font-family: var(--serif); font-size: 1.3rem; font-weight: 400;
+    color: var(--charcoal); margin-bottom: 1rem; line-height: 1.3;
+  }
+  .service-body { font-size: 0.86rem; color: var(--mid); line-height: 1.82; margin-bottom: 1.5rem; }
+  .service-tags { display: flex; flex-wrap: wrap; gap: 0.4rem; }
+  .tag {
+    font-size: 0.56rem; font-weight: 500; letter-spacing: 0.12em;
+    text-transform: uppercase; color: var(--accent);
+    border: 1px solid rgba(122,140,110,0.35); padding: 0.2rem 0.6rem;
+  }
+
+  .testimonials-section {
+    padding: 5rem 8vw; background: var(--warm-white); border-bottom: 1px solid var(--rule);
+  }
+  .section-header {
+    display: flex; justify-content: space-between; align-items: baseline;
+    margin-bottom: 2.5rem; border-bottom: 1px solid var(--rule); padding-bottom: 1.2rem;
+  }
+  .section-title { font-family: var(--serif); font-size: 1.75rem; font-weight: 300; color: var(--charcoal); }
+  .section-note { font-size: 0.66rem; font-weight: 400; letter-spacing: 0.12em; text-transform: uppercase; color: var(--light); }
+  .testimonials-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 2px; background: var(--rule); }
+  .testimonial-card { background: var(--cream); padding: 2.5rem; }
+  .testimonial-text {
+    font-family: var(--serif); font-size: 1rem; font-weight: 300; font-style: italic;
+    color: var(--deep); line-height: 1.75; margin-bottom: 1.2rem;
+  }
+  .testimonial-source { font-size: 0.63rem; font-weight: 500; letter-spacing: 0.1em; text-transform: uppercase; color: var(--light); }
+
+  /* ══════════════════════════════════════════
+     WRITING
+  ══════════════════════════════════════════ */
+  #writing { padding-top: 68px; }
+
+  .writing-streams {
+    display: grid; grid-template-columns: 1fr 1fr;
+    gap: 1px; background: var(--rule);
+    border-top: 1px solid var(--rule); border-bottom: 1px solid var(--rule);
+  }
+  .stream-card { background: var(--cream); padding: 3.5rem 3rem; transition: background 0.2s; }
+  .stream-card:hover { background: var(--warm-white); }
+  .stream-tag {
+    display: inline-block; font-size: 0.58rem; font-weight: 500; letter-spacing: 0.18em;
+    text-transform: uppercase; color: var(--cream); background: var(--accent);
+    padding: 0.28rem 0.75rem; margin-bottom: 1.5rem;
+  }
+  .stream-tag.warm { background: var(--accent-warm); }
+  .stream-title {
+    font-family: var(--serif); font-size: 1.55rem; font-weight: 400;
+    color: var(--charcoal); margin-bottom: 1rem; line-height: 1.25;
+  }
+  .stream-body { font-size: 0.88rem; color: var(--mid); line-height: 1.85; }
+
+  .substack-section {
+    padding: 5rem 8vw; display: grid; grid-template-columns: 1fr 1fr;
+    gap: 8rem; align-items: center; border-bottom: 1px solid var(--rule);
+  }
+  .substack-left h2 {
+    font-family: var(--serif); font-size: 2.7rem; font-weight: 300;
+    color: var(--charcoal); line-height: 1.15; margin-bottom: 1.5rem;
+  }
+  .substack-left h2 em { font-style: italic; color: var(--accent); }
+  .substack-left p { font-size: 0.9rem; color: var(--mid); line-height: 1.88; margin-bottom: 1rem; }
+
+  .subscribe-box { border: 1px solid var(--rule); padding: 2.5rem; background: var(--warm-white); }
+  .subscribe-box-label {
+    font-size: 0.58rem; font-weight: 500; letter-spacing: 0.2em;
+    text-transform: uppercase; color: var(--accent); margin-bottom: 0.9rem;
+  }
+  .subscribe-box h3 {
+    font-family: var(--serif); font-size: 1.35rem; font-weight: 400;
+    color: var(--charcoal); margin-bottom: 0.6rem; line-height: 1.3;
+  }
+  .subscribe-box > p { font-size: 0.84rem; color: var(--mid); line-height: 1.75; margin-bottom: 1.5rem; }
+
+  .subscribe-frequency {
+    display: flex; gap: 1px; margin-bottom: 1.5rem;
+    background: var(--rule); border: 1px solid var(--rule);
+  }
+  .freq-item { flex: 1; padding: 1rem; background: var(--cream); text-align: center; }
+  .freq-item-label { font-size: 0.56rem; font-weight: 500; letter-spacing: 0.14em; text-transform: uppercase; color: var(--light); margin-bottom: 0.3rem; }
+  .freq-item-value { font-family: var(--serif); font-size: 0.92rem; font-weight: 400; color: var(--charcoal); line-height: 1.3; }
+  .freq-item-sub { font-size: 0.72rem; color: var(--mid); margin-top: 0.1rem; }
+
+  .input-group { display: flex; }
+  .input-group input {
+    flex: 1; border: 1px solid var(--rule); border-right: none;
+    padding: 0.75rem 1rem; font-family: var(--sans); font-size: 0.84rem;
+    background: var(--cream); color: var(--charcoal); outline: none; font-weight: 300;
+  }
+  .input-group input::placeholder { color: var(--light); }
+  .input-group input:focus { border-color: var(--accent); }
+  .input-group button {
+    border: 1px solid var(--charcoal); background: var(--charcoal); color: var(--cream);
+    padding: 0.75rem 1.2rem; font-family: var(--sans); font-size: 0.63rem;
+    font-weight: 500; letter-spacing: 0.14em; text-transform: uppercase;
+    cursor: pointer; transition: background 0.2s; white-space: nowrap;
+  }
+  .input-group button:hover { background: var(--accent); border-color: var(--accent); }
+
+  .substack-note { font-size: 0.7rem; color: var(--light); margin-top: 0.8rem; text-align: center; }
+  .substack-note a { color: var(--accent); text-decoration: none; }
+
+  .preview-posts { padding: 4rem 8vw 5rem; }
+  .preview-posts-header {
+    font-size: 0.58rem; font-weight: 500; letter-spacing: 0.2em;
+    text-transform: uppercase; color: var(--accent);
+    margin-bottom: 2rem; padding-bottom: 1rem; border-bottom: 1px solid var(--rule);
+  }
+  .preview-grid {
+    display: grid; grid-template-columns: repeat(4, 1fr);
+    gap: 1px; background: var(--rule); border: 1px solid var(--rule);
+  }
+  .preview-card { background: var(--cream); padding: 2rem 1.8rem; transition: background 0.2s; }
+  .preview-card:hover { background: var(--warm-white); }
+  .preview-stream { font-size: 0.56rem; font-weight: 500; letter-spacing: 0.16em; text-transform: uppercase; color: var(--accent); margin-bottom: 0.8rem; }
+  .preview-stream.warm { color: var(--accent-warm); }
+  .preview-title { font-family: var(--serif); font-size: 1.02rem; font-weight: 400; color: var(--charcoal); line-height: 1.35; margin-bottom: 0.8rem; }
+  .preview-excerpt { font-size: 0.78rem; color: var(--mid); line-height: 1.72; }
+  .preview-coming { font-size: 0.6rem; font-weight: 500; letter-spacing: 0.12em; text-transform: uppercase; color: var(--light); margin-top: 1rem; display: block; }
+
+  /* ══════════════════════════════════════════
+     CONTACT
+  ══════════════════════════════════════════ */
+  #contact { padding-top: 68px; }
+
+  .contact-layout { padding: 5rem 8vw 6rem; display: grid; grid-template-columns: 1fr 1fr; gap: 8rem; }
+  .contact-info h2 { font-family: var(--serif); font-size: 2.5rem; font-weight: 300; color: var(--charcoal); line-height: 1.2; margin-bottom: 1.5rem; }
+  .contact-info h2 em { font-style: italic; color: var(--accent); }
+  .contact-info > p { font-size: 0.9rem; color: var(--mid); line-height: 1.88; margin-bottom: 2rem; }
+  .contact-detail { display: flex; flex-direction: column; }
+  .contact-item { display: flex; flex-direction: column; gap: 0.2rem; border-bottom: 1px solid var(--rule); padding: 1.1rem 0; }
+  .contact-item:first-child { border-top: 1px solid var(--rule); }
+  .contact-item-label { font-size: 0.58rem; font-weight: 500; letter-spacing: 0.18em; text-transform: uppercase; color: var(--light); }
+  .contact-item-value { font-family: var(--serif); font-size: 0.98rem; color: var(--charcoal); }
+
+  .form-field { margin-bottom: 1.2rem; }
+  .form-field label { display: block; font-size: 0.58rem; font-weight: 500; letter-spacing: 0.18em; text-transform: uppercase; color: var(--mid); margin-bottom: 0.5rem; }
+  .form-field input,
+  .form-field textarea,
+  .form-field select {
+    width: 100%; background: var(--warm-white); border: 1px solid var(--rule);
+    padding: 0.8rem 1rem; font-family: var(--sans); font-size: 0.88rem;
+    font-weight: 300; color: var(--charcoal); outline: none; transition: border-color 0.2s; appearance: none;
+  }
+  .form-field input::placeholder, .form-field textarea::placeholder { color: var(--light); }
+  .form-field input:focus, .form-field textarea:focus, .form-field select:focus { border-color: var(--accent); }
+  .form-field textarea { resize: vertical; min-height: 110px; }
+  .form-submit {
+    width: 100%; background: var(--charcoal); border: none; color: var(--cream);
+    padding: 1rem; font-family: var(--sans); font-size: 0.7rem; font-weight: 500;
+    letter-spacing: 0.18em; text-transform: uppercase; cursor: pointer;
+    margin-top: 0.5rem; transition: background 0.2s;
+  }
+  .form-submit:hover { background: var(--accent); }
+
+  /* ── FOOTER ── */
+  footer {
+    background: var(--charcoal); padding: 3rem 8vw;
+    display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 1rem;
+  }
+  .footer-brand { display: flex; flex-direction: column; gap: 0.1rem; }
+  .footer-name { font-family: var(--serif); font-size: 1rem; font-weight: 400; color: var(--cream); letter-spacing: 0.03em; }
+  .footer-entity { font-size: 0.58rem; font-weight: 400; letter-spacing: 0.14em; text-transform: uppercase; color: rgba(250,248,244,0.38); }
+  .footer-links { display: flex; gap: 2rem; list-style: none; }
+  .footer-links a { font-size: 0.63rem; font-weight: 400; letter-spacing: 0.12em; text-transform: uppercase; color: rgba(250,248,244,0.42); text-decoration: none; cursor: pointer; transition: color 0.2s; }
+  .footer-links a:hover { color: var(--cream); }
+  .footer-copy { font-size: 0.63rem; color: rgba(250,248,244,0.28); }
+
+  /* ── ANIMATIONS ── */
+  @keyframes fadeUp {
+    from { opacity: 0; transform: translateY(16px); }
+    to { opacity: 1; transform: translateY(0); }
+  }
+  .fade-up { animation: fadeUp 0.65s ease forwards; }
+  .delay-1 { animation-delay: 0.08s; opacity: 0; }
+  .delay-2 { animation-delay: 0.2s; opacity: 0; }
+  .delay-3 { animation-delay: 0.34s; opacity: 0; }
+  .delay-4 { animation-delay: 0.48s; opacity: 0; }
+  .delay-5 { animation-delay: 0.62s; opacity: 0; }
+
+  /* ── RESPONSIVE ── */
+  @media (max-width: 1100px) {
+    .hero { grid-template-columns: 1fr 1fr; }
+    .hero-visual { display: none; }
+  }
+  @media (max-width: 820px) {
+    .hero { grid-template-columns: 1fr; }
+    .hero-left { border-right: none; border-bottom: 1px solid var(--rule); padding: 4rem 6vw; }
+    .hero-right { padding: 3rem 6vw; }
+    .testimonial-strip { grid-template-columns: 1fr; gap: 1rem; }
+    .institutions-bar { grid-template-columns: 1fr; }
+    .institution-cell { border-right: none; border-bottom: 1px solid var(--rule); }
+    .page-header { grid-template-columns: 1fr; gap: 2rem; padding: 4rem 6vw 3rem; }
+    .page-header-right { flex-direction: column; align-items: flex-start; }
+    .page-tree-container { display: none; }
+    .content-body { grid-template-columns: 1fr; padding: 3rem 6vw; }
+    .content-sidebar { display: none; }
+    .services-grid { grid-template-columns: 1fr; }
+    .testimonials-grid { grid-template-columns: 1fr; }
+    .writing-streams { grid-template-columns: 1fr; }
+    .substack-section { grid-template-columns: 1fr; gap: 3rem; padding: 4rem 6vw; }
+    .preview-grid { grid-template-columns: 1fr 1fr; }
+    .contact-layout { grid-template-columns: 1fr; gap: 3rem; padding: 4rem 6vw; }
+    .nav-links { display: none; }
+    footer { flex-direction: column; align-items: flex-start; gap: 1.5rem; }
+    .cresca-band { gap: 1rem; }
+    .cresca-meaning { display: none; }
+    .credential-grid { grid-template-columns: 1fr; }
+  }
+  @media (max-width: 520px) {
+    .preview-grid { grid-template-columns: 1fr; }
+    .subscribe-frequency { flex-direction: column; }
+  }
+</style>
 </head>
 <body>
 
+<!-- NAV — no Singapore reference -->
 <nav>
-  <a class="nav-logo" href="/">
+  <a class="nav-logo" onclick="showSection('home')">
     <span class="nav-logo-name">Kavitha Iyer</span>
     <span class="nav-logo-sub">Crésca Consulting · Singapore</span>
   </a>
   <ul class="nav-links">
-    <li><a href="/">Home</a></li>
-    <li><a href="/about">About</a></li>
-    <li><a href="/work">Work With Me</a></li>
-    <li><a href="/writing">Writing</a></li>
+    <li><a onclick="showSection('home')">Home</a></li>
+    <li><a onclick="showSection('about')">About</a></li>
+    <li><a onclick="showSection('work')">Work With Me</a></li>
+    <li><a onclick="showSection('writing')">Writing</a></li>
   </ul>
-  <a class="nav-cta" href="/contact">Get in Touch</a>
+  <button class="nav-cta" onclick="showSection('contact')">Get in Touch</button>
 </nav>
 
-<section id="home">
+
+<!-- ══════════════════════════════════════════
+     HOME
+══════════════════════════════════════════ -->
+<section id="home" class="active">
 
   <!-- CRESCA BAND -->
   <div class="cresca-band">
@@ -49,8 +631,8 @@
         I work with senior leaders and organisations at the intersection of the inner and the outer — accompanying them through the depth of transformation, and writing about what that work genuinely requires.
       </p>
       <div class="hero-actions fade-up delay-4">
-        <a class="btn-primary" href="/work">Work With Me</a>
-        <a class="btn-ghost" href="/writing">Read My Writing →</a>
+        <button class="btn-primary" onclick="showSection('work')">Work With Me</button>
+        <button class="btn-ghost" onclick="showSection('writing')">Read My Writing →</button>
       </div>
     </div>
 
@@ -139,19 +721,19 @@
         <p class="hero-card-label">Coaching Practice</p>
         <h3 class="hero-card-title">Senior Executive & Leadership Coaching</h3>
         <p>Twenty-five years accompanying C-suite executives, leadership teams, and boards through identity, transition, and transformation — working across sectors and geographies in Singapore, Europe, and Asia Pacific.</p>
-        <a class="inline-link" href="/work">Explore the work →</a>
+        <button class="inline-link" onclick="showSection('work')">Explore the work →</button>
       </div>
       <div class="hero-card fade-up delay-3">
         <p class="hero-card-label">Writing</p>
         <h3 class="hero-card-title">Two Voices on Transformation</h3>
         <p>One voice for coaches — on craft and depth. One for leaders — on the inner life of leadership. Written from inside practice and doctoral inquiry. Free on Substack.</p>
-        <a class="inline-link" href="/writing">Read & Subscribe →</a>
+        <button class="inline-link" onclick="showSection('writing')">Read & Subscribe →</button>
       </div>
       <div class="hero-card fade-up delay-4">
         <p class="hero-card-label">Doctoral Research</p>
         <h3 class="hero-card-title">PhD in Organisational Change</h3>
-        <p>Ashridge Business School · Research into self-authorisation, open tension as epistemological practice, and the integration of depth psychology with action research frameworks.</p>
-        <a class="inline-link" href="/about">About my approach →</a>
+        <p>Hult Ashridge · Research into self-authorisation, open tension as epistemological practice, and the integration of depth psychology with action research frameworks.</p>
+        <button class="inline-link" onclick="showSection('about')">About my approach →</button>
       </div>
     </div>
 
@@ -170,35 +752,535 @@
     <div class="institution-cell">
       <span class="institution-role">Lead Coach</span>
       <span class="institution-name">INSEAD</span>
-      <span class="institution-detail">Singapore · France · Abu Dhabi · 2006–present</span>
+      <span class="institution-detail">Global Business School · 2014–present</span>
     </div>
     <div class="institution-cell">
       <span class="institution-role">Doctor of Philosophy</span>
-      <span class="institution-name">Ashridge Business School, Hult</span>
+      <span class="institution-name">Hult Ashridge</span>
       <span class="institution-detail">PhD in Organisational Change · 2015–2020</span>
     </div>
     <div class="institution-cell">
       <span class="institution-role">Master of Science</span>
       <span class="institution-name">Case Western Reserve University</span>
-      <span class="institution-detail">Positive OD & Change · Weatherhead School of Management · 2009–2011</span>
+      <span class="institution-detail">Positive Organisation Development & Change · Weatherhead School of Management · 2009–2011</span>
     </div>
   </div>
 
 </section>
 
+
+<!-- ══════════════════════════════════════════
+     ABOUT
+══════════════════════════════════════════ -->
+<section id="about">
+
+  <div class="page-header">
+    <div class="page-header-left">
+      <p class="page-eyebrow">About</p>
+      <h1 class="page-title">Kavitha<br><em>Iyer</em></h1>
+    </div>
+    <div class="page-header-right">
+      <span style="flex:1;font-family:var(--serif);font-size:1.15rem;font-weight:300;font-style:italic;color:var(--mid);line-height:1.65">
+        I believe that we coaches must hold ourselves to the same rigour of inquiry that we ask of our clients. It is the practice of living one's own questions with curiosity, bringing alive the essential democracy of being human.
+      </span>
+      <!-- Tree of Life illustration -->
+      <div class="page-tree-container">
+        <svg viewBox="0 0 140 180" xmlns="http://www.w3.org/2000/svg">
+          <defs>
+            <linearGradient id="treeLeafA" x1="0%" y1="0%" x2="100%" y2="100%">
+              <stop offset="0%" style="stop-color:#8A9D78;stop-opacity:0.6"/>
+              <stop offset="100%" style="stop-color:#6A8260;stop-opacity:0.3"/>
+            </linearGradient>
+            <linearGradient id="treeLeafB" x1="0%" y1="0%" x2="100%" y2="100%">
+              <stop offset="0%" style="stop-color:#9DAE8C;stop-opacity:0.45"/>
+              <stop offset="100%" style="stop-color:#7A8C6E;stop-opacity:0.2"/>
+            </linearGradient>
+          </defs>
+          <!-- Trunk -->
+          <path d="M70 175 Q70 155 70 140 Q70 125 70 110 Q70 95 70 80" stroke="#8A9D78" stroke-width="2.2" fill="none" stroke-opacity="0.5"/>
+          <!-- Roots -->
+          <path d="M70 175 Q55 170 42 175" stroke="#8A9D78" stroke-width="1.2" fill="none" stroke-opacity="0.35"/>
+          <path d="M70 175 Q85 170 98 175" stroke="#8A9D78" stroke-width="1.2" fill="none" stroke-opacity="0.35"/>
+          <path d="M70 175 Q62 172 50 178" stroke="#8A9D78" stroke-width="0.8" fill="none" stroke-opacity="0.25"/>
+          <path d="M70 175 Q78 172 90 178" stroke="#8A9D78" stroke-width="0.8" fill="none" stroke-opacity="0.25"/>
+          <!-- Branch level 1 -->
+          <path d="M70 140 Q52 132 38 138" stroke="#8A9D78" stroke-width="1.2" fill="none" stroke-opacity="0.42"/>
+          <path d="M70 140 Q88 132 102 138" stroke="#8A9D78" stroke-width="1.2" fill="none" stroke-opacity="0.42"/>
+          <!-- Leaf pair level 1 -->
+          <path d="M38 138 Q24 126 28 114 Q36 108 46 118 Q50 128 38 138" fill="url(#treeLeafA)" stroke="#7A8C6E" stroke-width="0.6" stroke-opacity="0.4"/>
+          <path d="M102 138 Q116 126 112 114 Q104 108 94 118 Q90 128 102 138" fill="url(#treeLeafA)" stroke="#7A8C6E" stroke-width="0.6" stroke-opacity="0.4"/>
+          <!-- Branch level 2 -->
+          <path d="M70 120 Q55 112 42 116" stroke="#8A9D78" stroke-width="1" fill="none" stroke-opacity="0.38"/>
+          <path d="M70 120 Q85 112 98 116" stroke="#8A9D78" stroke-width="1" fill="none" stroke-opacity="0.38"/>
+          <!-- Leaf pair level 2 -->
+          <path d="M42 116 Q30 106 33 95 Q40 88 50 98 Q54 108 42 116" fill="url(#treeLeafB)" stroke="#7A8C6E" stroke-width="0.5" stroke-opacity="0.35"/>
+          <path d="M98 116 Q110 106 107 95 Q100 88 90 98 Q86 108 98 116" fill="url(#treeLeafB)" stroke="#7A8C6E" stroke-width="0.5" stroke-opacity="0.35"/>
+          <!-- Branch level 3 -->
+          <path d="M70 100 Q58 93 48 96" stroke="#8A9D78" stroke-width="0.9" fill="none" stroke-opacity="0.34"/>
+          <path d="M70 100 Q82 93 92 96" stroke="#8A9D78" stroke-width="0.9" fill="none" stroke-opacity="0.34"/>
+          <!-- Leaf pair level 3 -->
+          <path d="M48 96 Q38 87 40 78 Q47 72 56 81 Q59 90 48 96" fill="url(#treeLeafA)" stroke="#7A8C6E" stroke-width="0.5" stroke-opacity="0.3"/>
+          <path d="M92 96 Q102 87 100 78 Q93 72 84 81 Q81 90 92 96" fill="url(#treeLeafA)" stroke="#7A8C6E" stroke-width="0.5" stroke-opacity="0.3"/>
+          <!-- Crown -->
+          <path d="M70 80 Q56 66 58 54 Q65 46 74 56 Q76 68 70 80" fill="url(#treeLeafA)" stroke="#7A8C6E" stroke-width="0.6" stroke-opacity="0.4"/>
+          <path d="M70 80 Q84 66 82 54 Q75 46 66 56 Q64 68 70 80" fill="url(#treeLeafB)" stroke="#7A8C6E" stroke-width="0.6" stroke-opacity="0.38"/>
+          <!-- Apex bud -->
+          <circle cx="70" cy="46" r="5.5" fill="#8A9D78" fill-opacity="0.45"/>
+          <circle cx="70" cy="46" r="3" fill="#7A8C6E" fill-opacity="0.65"/>
+          <!-- Accent dots -->
+          <circle cx="28" cy="112" r="1.2" fill="#C4A882" fill-opacity="0.45"/>
+          <circle cx="112" cy="112" r="1.2" fill="#C4A882" fill-opacity="0.45"/>
+          <circle cx="38" cy="86" r="1" fill="#C4A882" fill-opacity="0.35"/>
+          <circle cx="102" cy="86" r="1" fill="#C4A882" fill-opacity="0.35"/>
+        </svg>
+      </div>
+    </div>
+  </div>
+
+  <div class="content-body">
+    <aside class="content-sidebar">
+      <ul class="sidebar-nav">
+        <li><a href="#">Biography</a></li>
+        <li><a href="#">Theoretical Approach</a></li>
+        <li><a href="#">Credentials & Roles</a></li>
+      </ul>
+    </aside>
+    <main>
+      <div class="prose-section">
+        <p class="prose-section-label">Biography</p>
+
+        <!-- PHOTO PLACEHOLDER -->
+        <div style="float:right;margin:0 0 2rem 2.5rem;width:200px;">
+          <div style="width:200px;height:240px;background:var(--warm-white);border:1px solid var(--rule);display:flex;flex-direction:column;align-items:center;justify-content:center;gap:0.7rem;">
+            <svg width="48" height="48" viewBox="0 0 48 48" fill="none" xmlns="http://www.w3.org/2000/svg">
+              <circle cx="24" cy="18" r="10" stroke="#C4A882" stroke-width="1.2" fill="none" stroke-opacity="0.55"/>
+              <path d="M6 44 Q6 32 24 32 Q42 32 42 44" stroke="#C4A882" stroke-width="1.2" fill="none" stroke-opacity="0.45"/>
+            </svg>
+            <span style="font-family:var(--sans);font-size:0.58rem;font-weight:500;letter-spacing:0.18em;text-transform:uppercase;color:var(--light)">Photo</span>
+          </div>
+        </div>
+
+        <h3>The Practitioner</h3>
+        <p>Dr Kavitha Iyer is the founder of Crésca Consulting Pte Ltd — whose name, drawn from the Latin <em>crescere</em>, means to arise, to expand, to spring forth, to grow. The name reflects a core conviction: that the most significant growth available to leaders is not the acquisition of new skills but the deepening of self-knowledge, and the courage to lead from that place.</p>
+        <p>A leading executive coach and leadership development professional based in Singapore, consulting internationally, Kavitha has worked for over twenty-five years with C-suite executives, senior leadership teams, and boards across pharma, financial services, luxury, consumer goods, and professional services. Since 2006 she has been associated with INSEAD as an executive coach and, since 2014, as Lead Coach.</p>
+        <p>Prior to her independent practice, she held senior human resources and organisational development roles across Unilever, Merck, American Express, and other international organisations — a foundation that grounds her practice in the lived realities of corporate leadership. What distinguishes both her practice and her writing is the rigour with which she has undertaken her own development alongside the profession she occupies — through sustained personal inquiry, doctoral scholarship, and a lifelong commitment to living her own questions.</p>
+        <div style="clear:both"></div>
+      </div>
+
+      <div class="prose-section">
+        <p class="prose-section-label">Theoretical Approach</p>
+        <h3>Where the Work Lives</h3>
+        <p>Kavitha's practice is informed by three interrelated theoretical traditions, situated within a <strong>postmodern notion of change</strong> — one that holds the epistemic tensions between rigour and uncertainty, between certainty and mystery, between the mapped and the unmapped, between evidence and experience — as the very conditions in which the most truthful and transformative accounts of human change become possible. These traditions are held in productive dialogue rather than deployed as separate tools: <strong>strengths-based approaches to change</strong> offer a science of transformation across the fractals of organisation, team and individual; <strong>action research</strong> provides a framework for conceptualising rigour and inquiry from within practice; and the <strong>psychoanalytic theory of Christopher Bollas</strong> gives language to the dyadic depth of the coaching relationship.</p>
+        <blockquote>
+          <p>Genuine transformation requires that leaders act on what they come to know about themselves — changing not only how they understand themselves but how they lead, relate, and shape the organisations and human lives they are responsible for.</p>
+        </blockquote>
+        <p>Central to this approach is the concept of <em>open tension</em> (Iyer, 2020) — a disciplined willingness to remain with ambiguity, to inhabit the generative space of not-knowing, and to resist the pull toward premature resolution. It is an epistemological stance as much as a practice: a recognition that genuine transformation is rarely linear, rarely tidy, and rarely fully visible as it is happening. What it requires, above all, is integrity — in the relationship, in the inquiry, and in the willingness to stay with what is genuinely difficult.</p>
+      </div>
+
+      <div class="prose-section">
+        <p class="prose-section-label">Credentials & Roles</p>
+        <h3>Formation and Institutional Affiliations</h3>
+        <div class="credential-grid">
+          <div class="credential-cell">
+            <p class="credential-cell-label">Founder & Director</p>
+            <p class="credential-cell-value">Crésca Consulting Pte Ltd</p>
+            <p class="credential-cell-detail">Executive Coaching & Leadership Development · 2013–present</p>
+          </div>
+          <div class="credential-cell">
+            <p class="credential-cell-label">Lead Coach</p>
+            <p class="credential-cell-value">INSEAD</p>
+            <p class="credential-cell-detail">Global Business School · 2014–present</p>
+          </div>
+          <div class="credential-cell">
+            <p class="credential-cell-label">Doctor of Philosophy</p>
+            <p class="credential-cell-value">PhD in Organisational Change</p>
+            <p class="credential-cell-detail">Hult Ashridge · 2015–2020</p>
+          </div>
+          <div class="credential-cell">
+            <p class="credential-cell-label">Master of Science</p>
+            <p class="credential-cell-value">Positive Organisation Development & Change (MPOD)</p>
+            <p class="credential-cell-detail">Weatherhead School of Management, Case Western Reserve University · 2009–2011</p>
+          </div>
+        </div>
+      </div>
+    </main>
+  </div>
+</section>
+
+
+<!-- ══════════════════════════════════════════
+     WORK WITH ME
+══════════════════════════════════════════ -->
+<section id="work">
+
+  <div class="page-header">
+    <div class="page-header-left">
+      <p class="page-eyebrow">Work With Me</p>
+      <h1 class="page-title">Coaching at<br><em>depth</em></h1>
+    </div>
+    <div class="page-header-right">
+      <span style="flex:1;font-family:var(--serif);font-size:1.15rem;font-weight:300;font-style:italic;color:var(--mid);line-height:1.65">
+        The work begins not at the job description but at the full arc of a life — the history, patterns, and unconscious organising principles that shape how a leader inhabits every room they enter and every decision they make.
+      </span>
+      <div class="page-tree-container">
+        <svg viewBox="0 0 140 180" xmlns="http://www.w3.org/2000/svg">
+          <defs>
+            <linearGradient id="treeLeafC" x1="0%" y1="0%" x2="100%" y2="100%">
+              <stop offset="0%" style="stop-color:#8A9D78;stop-opacity:0.55"/>
+              <stop offset="100%" style="stop-color:#6A8260;stop-opacity:0.28"/>
+            </linearGradient>
+            <linearGradient id="treeLeafD" x1="0%" y1="0%" x2="100%" y2="100%">
+              <stop offset="0%" style="stop-color:#B5704A;stop-opacity:0.38"/>
+              <stop offset="100%" style="stop-color:#8A5535;stop-opacity:0.18"/>
+            </linearGradient>
+          </defs>
+          <path d="M70 175 Q70 155 70 140 Q70 125 70 110 Q70 95 70 80" stroke="#8A9D78" stroke-width="2.2" fill="none" stroke-opacity="0.48"/>
+          <path d="M70 175 Q55 170 42 175" stroke="#8A9D78" stroke-width="1.2" fill="none" stroke-opacity="0.32"/>
+          <path d="M70 175 Q85 170 98 175" stroke="#8A9D78" stroke-width="1.2" fill="none" stroke-opacity="0.32"/>
+          <path d="M70 175 Q60 173 48 178" stroke="#8A9D78" stroke-width="0.8" fill="none" stroke-opacity="0.22"/>
+          <path d="M70 175 Q80 173 92 178" stroke="#8A9D78" stroke-width="0.8" fill="none" stroke-opacity="0.22"/>
+          <path d="M70 140 Q52 132 38 138" stroke="#8A9D78" stroke-width="1.2" fill="none" stroke-opacity="0.4"/>
+          <path d="M70 140 Q88 132 102 138" stroke="#8A9D78" stroke-width="1.2" fill="none" stroke-opacity="0.4"/>
+          <path d="M38 138 Q24 126 28 114 Q36 108 46 118 Q50 128 38 138" fill="url(#treeLeafC)" stroke="#7A8C6E" stroke-width="0.6" stroke-opacity="0.38"/>
+          <path d="M102 138 Q116 126 112 114 Q104 108 94 118 Q90 128 102 138" fill="url(#treeLeafD)" stroke="#B5704A" stroke-width="0.6" stroke-opacity="0.32"/>
+          <path d="M70 120 Q55 112 42 116" stroke="#8A9D78" stroke-width="1" fill="none" stroke-opacity="0.36"/>
+          <path d="M70 120 Q85 112 98 116" stroke="#8A9D78" stroke-width="1" fill="none" stroke-opacity="0.36"/>
+          <path d="M42 116 Q30 106 33 95 Q40 88 50 98 Q54 108 42 116" fill="url(#treeLeafD)" stroke="#B5704A" stroke-width="0.5" stroke-opacity="0.3"/>
+          <path d="M98 116 Q110 106 107 95 Q100 88 90 98 Q86 108 98 116" fill="url(#treeLeafC)" stroke="#7A8C6E" stroke-width="0.5" stroke-opacity="0.32"/>
+          <path d="M70 100 Q58 93 48 96" stroke="#8A9D78" stroke-width="0.9" fill="none" stroke-opacity="0.32"/>
+          <path d="M70 100 Q82 93 92 96" stroke="#8A9D78" stroke-width="0.9" fill="none" stroke-opacity="0.32"/>
+          <path d="M48 96 Q38 87 40 78 Q47 72 56 81 Q59 90 48 96" fill="url(#treeLeafC)" stroke="#7A8C6E" stroke-width="0.5" stroke-opacity="0.3"/>
+          <path d="M92 96 Q102 87 100 78 Q93 72 84 81 Q81 90 92 96" fill="url(#treeLeafD)" stroke="#B5704A" stroke-width="0.5" stroke-opacity="0.28"/>
+          <path d="M70 80 Q56 66 58 54 Q65 46 74 56 Q76 68 70 80" fill="url(#treeLeafC)" stroke="#7A8C6E" stroke-width="0.6" stroke-opacity="0.38"/>
+          <path d="M70 80 Q84 66 82 54 Q75 46 66 56 Q64 68 70 80" fill="url(#treeLeafD)" stroke="#B5704A" stroke-width="0.6" stroke-opacity="0.32"/>
+          <circle cx="70" cy="46" r="5.5" fill="#8A9D78" fill-opacity="0.42"/>
+          <circle cx="70" cy="46" r="3" fill="#7A8C6E" fill-opacity="0.62"/>
+          <circle cx="28" cy="112" r="1.2" fill="#C4A882" fill-opacity="0.42"/>
+          <circle cx="112" cy="112" r="1.2" fill="#C4A882" fill-opacity="0.42"/>
+        </svg>
+      </div>
+    </div>
+  </div>
+
+  <div class="services-grid">
+    <div class="service-card">
+      <div class="service-number">01</div>
+      <h3 class="service-title">Individual Executive Coaching</h3>
+      <p class="service-body">A sustained, one-to-one coaching engagement for senior leaders navigating identity, transition, complexity, or genuine transformation. Work proceeds at the intersection of the presenting business agenda and the deeper biographical and unconscious material that shapes how it is being met. Engagements typically run six to twelve months.</p>
+      <div class="service-tags">
+        <span class="tag">C-Suite</span><span class="tag">Senior Leaders</span><span class="tag">Transition</span><span class="tag">Identity</span><span class="tag">Women Leaders</span>
+      </div>
+    </div>
+    <div class="service-card">
+      <div class="service-number">02</div>
+      <h3 class="service-title">Leadership Team Development</h3>
+      <p class="service-body">Working with intact leadership teams and boards to deepen intra- and inter-personal understanding, address the group dynamics that constrain performance, and build the relational and psychological conditions for genuine collective leadership and strategic impact.</p>
+      <div class="service-tags">
+        <span class="tag">Boards</span><span class="tag">Executive Teams</span><span class="tag">Group Dynamics</span><span class="tag">Team Coaching</span>
+      </div>
+    </div>
+    <div class="service-card">
+      <div class="service-number">03</div>
+      <h3 class="service-title">Leadership Development Programmes</h3>
+      <p class="service-body">Custom-designed developmental programmes for organisations navigating significant change, high-potential talent acceleration, or the cultivation of a more self-aware, relationally sophisticated leadership culture. Designed around the specific strategic and human realities of your organisation.</p>
+      <div class="service-tags">
+        <span class="tag">Custom Design</span><span class="tag">High Potential</span><span class="tag">Culture Change</span>
+      </div>
+    </div>
+  </div>
+
+  <div class="testimonials-section">
+    <div class="section-header">
+      <h2 class="section-title">What clients say</h2>
+      <span class="section-note">Selected voices</span>
+    </div>
+    <div class="testimonials-grid">
+      <div class="testimonial-card">
+        <p class="testimonial-text">"We are now entering the sixth year of this transformative experience, having run yearly workshops in Asia, Europe and the US. The design focuses on 'the knowing' and 'the doing', but also on 'the being' — with sustained changes to the leadership impact of each participant."</p>
+        <p class="testimonial-source">Global Head, Learning & Development · Leading Global Optical Solutions Provider</p>
+      </div>
+      <div class="testimonial-card">
+        <p class="testimonial-text">"Despite our initial skepticism, Kavitha led us to discover within ourselves a capacity for leadership that is as much about compassion, care and authenticity as it is about ambition and flair. A year on, our team is still reaping the benefits."</p>
+        <p class="testimonial-source">Director, Corporate Communications · Large Insurance Provider</p>
+      </div>
+      <div class="testimonial-card">
+        <p class="testimonial-text">"Kavitha has a unique ability in drawing out the core-issues of her client by a good balance of compassion and courage — compassion to create the ambience for openness and courage to dig deeper into the core issues."</p>
+        <p class="testimonial-source">Senior Executive · Global Financial Services</p>
+      </div>
+      <div class="testimonial-card">
+        <p class="testimonial-text">"49% of participants that took part in the past three years have been promoted to larger roles, thereby strengthening our talent pipeline — and Kavitha has been integral to making this happen."</p>
+        <p class="testimonial-source">Global Head, Coaching & OD · Global Pharmaceutical MNC</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+
+<!-- ══════════════════════════════════════════
+     WRITING
+══════════════════════════════════════════ -->
+<section id="writing">
+
+  <div class="page-header">
+    <div class="page-header-left">
+      <p class="page-eyebrow">Writing</p>
+      <h1 class="page-title">Two voices on<br><em>transformation</em></h1>
+    </div>
+    <div class="page-header-right">
+      <span style="flex:1;font-family:var(--serif);font-size:1.15rem;font-weight:300;font-style:italic;color:var(--mid);line-height:1.65">
+        One voice for coaches — on the craft, depth, and responsibility of serious practice. One voice for leaders — on the inner life of leadership and what genuine change actually requires.
+      </span>
+      <div class="page-tree-container">
+        <svg viewBox="0 0 140 180" xmlns="http://www.w3.org/2000/svg">
+          <defs>
+            <linearGradient id="treeLeafE" x1="0%" y1="0%" x2="100%" y2="100%">
+              <stop offset="0%" style="stop-color:#8A9D78;stop-opacity:0.52"/>
+              <stop offset="100%" style="stop-color:#6A8260;stop-opacity:0.26"/>
+            </linearGradient>
+            <linearGradient id="treeLeafF" x1="0%" y1="100%" x2="100%" y2="0%">
+              <stop offset="0%" style="stop-color:#C4A882;stop-opacity:0.42"/>
+              <stop offset="100%" style="stop-color:#A88855;stop-opacity:0.2"/>
+            </linearGradient>
+          </defs>
+          <path d="M70 175 Q70 150 70 130 Q70 110 70 90 Q70 75 70 60" stroke="#8A9D78" stroke-width="2" fill="none" stroke-opacity="0.45"/>
+          <path d="M70 175 Q54 169 40 174" stroke="#8A9D78" stroke-width="1.1" fill="none" stroke-opacity="0.3"/>
+          <path d="M70 175 Q86 169 100 174" stroke="#8A9D78" stroke-width="1.1" fill="none" stroke-opacity="0.3"/>
+          <path d="M70 175 Q58 173 46 179" stroke="#8A9D78" stroke-width="0.7" fill="none" stroke-opacity="0.2"/>
+          <path d="M70 175 Q82 173 94 179" stroke="#8A9D78" stroke-width="0.7" fill="none" stroke-opacity="0.2"/>
+          <path d="M70 145 Q50 136 34 142" stroke="#8A9D78" stroke-width="1.1" fill="none" stroke-opacity="0.38"/>
+          <path d="M70 145 Q90 136 106 142" stroke="#8A9D78" stroke-width="1.1" fill="none" stroke-opacity="0.38"/>
+          <path d="M34 142 Q20 130 24 118 Q32 111 43 122 Q47 133 34 142" fill="url(#treeLeafE)" stroke="#7A8C6E" stroke-width="0.6" stroke-opacity="0.36"/>
+          <path d="M106 142 Q120 130 116 118 Q108 111 97 122 Q93 133 106 142" fill="url(#treeLeafF)" stroke="#C4A882" stroke-width="0.6" stroke-opacity="0.3"/>
+          <path d="M70 122 Q53 114 38 118" stroke="#8A9D78" stroke-width="0.95" fill="none" stroke-opacity="0.34"/>
+          <path d="M70 122 Q87 114 102 118" stroke="#8A9D78" stroke-width="0.95" fill="none" stroke-opacity="0.34"/>
+          <path d="M38 118 Q26 108 29 97 Q36 90 47 101 Q50 111 38 118" fill="url(#treeLeafF)" stroke="#C4A882" stroke-width="0.5" stroke-opacity="0.28"/>
+          <path d="M102 118 Q114 108 111 97 Q104 90 93 101 Q90 111 102 118" fill="url(#treeLeafE)" stroke="#7A8C6E" stroke-width="0.5" stroke-opacity="0.3"/>
+          <path d="M70 100 Q57 92 46 95" stroke="#8A9D78" stroke-width="0.85" fill="none" stroke-opacity="0.3"/>
+          <path d="M70 100 Q83 92 94 95" stroke="#8A9D78" stroke-width="0.85" fill="none" stroke-opacity="0.3"/>
+          <path d="M46 95 Q36 85 39 75 Q46 68 56 78 Q59 88 46 95" fill="url(#treeLeafE)" stroke="#7A8C6E" stroke-width="0.5" stroke-opacity="0.28"/>
+          <path d="M94 95 Q104 85 101 75 Q94 68 84 78 Q81 88 94 95" fill="url(#treeLeafF)" stroke="#C4A882" stroke-width="0.5" stroke-opacity="0.25"/>
+          <path d="M70 78 Q57 64 59 52 Q66 45 75 55 Q77 67 70 78" fill="url(#treeLeafE)" stroke="#7A8C6E" stroke-width="0.55" stroke-opacity="0.36"/>
+          <path d="M70 78 Q83 64 81 52 Q74 45 65 55 Q63 67 70 78" fill="url(#treeLeafF)" stroke="#C4A882" stroke-width="0.55" stroke-opacity="0.3"/>
+          <circle cx="70" cy="44" r="5" fill="#8A9D78" fill-opacity="0.4"/>
+          <circle cx="70" cy="44" r="2.8" fill="#7A8C6E" fill-opacity="0.6"/>
+          <circle cx="22" cy="115" r="1.1" fill="#C4A882" fill-opacity="0.4"/>
+          <circle cx="118" cy="115" r="1.1" fill="#C4A882" fill-opacity="0.4"/>
+        </svg>
+      </div>
+    </div>
+  </div>
+
+  <div class="writing-streams">
+    <div class="stream-card">
+      <span class="stream-tag">For Coaches</span>
+      <h3 class="stream-title">The Craft &amp; the Depth</h3>
+      <p class="stream-body">A series on what it means to coach at the level of identity and lived experience, where biography, context, and meaning-making shape the work. Drawing on postmodern epistemology and a disciplined examination of practice, it explores the development of coaching craft into a rigorous praxis. For practitioners who want to go deeper than technique, and who remain committed to their own ongoing development as integral to the work. Published free on Substack.</p>
+    </div>
+    <div class="stream-card">
+      <span class="stream-tag warm">For Leaders</span>
+      <h3 class="stream-title">The Inner Life of Leadership</h3>
+      <p class="stream-body">One voice for leaders — on the inner life of leadership and what genuine change actually requires at the complex interplay between person, role and organisation. For senior leaders who sense that the most significant development is always, at some level, a form of deep self-encounter — and who are willing to do that work. Published free on Substack.</p>
+    </div>
+  </div>
+
+  <div class="substack-section">
+    <div class="substack-left">
+      <h2>Subscribe on<br><em>Substack</em></h2>
+      <p>A space for sustained thinking on leadership, change, and coaching practice — for those who want to go beyond the surface.</p>
+      <p style="font-size:0.82rem;color:var(--accent);font-style:italic;margin-top:0.5rem">Free to read · Paid subscription coming</p>
+    </div>
+    <div>
+      <div class="subscribe-box">
+        <p class="subscribe-box-label">Join the conversation</p>
+        <h3>The Backstage of Becoming</h3>
+        <p>A Substack by Dr Kavitha Iyer — on coaching craft and the inner life of leadership.</p>
+        <div class="subscribe-frequency">
+          <div class="freq-item">
+            <p class="freq-item-label">Stream One</p>
+            <p class="freq-item-value">For Coaches</p>
+            <p class="freq-item-sub">The Craft & Depth</p>
+          </div>
+          <div class="freq-item">
+            <p class="freq-item-label">Stream Two</p>
+            <p class="freq-item-value">For Leaders</p>
+            <p class="freq-item-sub">The Inner Life</p>
+          </div>
+        </div>
+        <div class="input-group">
+          <input type="email" placeholder="Your email address">
+          <button>Subscribe</button>
+        </div>
+        <p class="substack-note">Also at <a href="#">substack.com/@kavithaiyer</a></p>
+      </div>
+    </div>
+  </div>
+
+  <div class="preview-posts">
+    <p class="preview-posts-header">Coming first — inaugural posts</p>
+    <div class="preview-grid">
+      <div class="preview-card">
+        <p class="preview-stream">Post One</p>
+        <h4 class="preview-title">How to Approach the Writing</h4>
+        <p class="preview-excerpt">An introduction to the voice, the stance, and the spirit in which this Substack is written — and what it asks of its readers.</p>
+        <span class="preview-coming">Coming soon</span>
+      </div>
+      <div class="preview-card">
+        <p class="preview-stream">Post Two</p>
+        <h4 class="preview-title">How the Writing is Organised</h4>
+        <p class="preview-excerpt">A guide to the two streams — one for coaches, one for leaders — and how to navigate what is here.</p>
+        <span class="preview-coming">Coming soon</span>
+      </div>
+      <div class="preview-card">
+        <p class="preview-stream">Post Three</p>
+        <h4 class="preview-title">Synopsis of the Doctoral Work</h4>
+        <p class="preview-excerpt">A summary of the research that underpins much of the thinking here — on self-authorisation, open tension, and the nature of change.</p>
+        <span class="preview-coming">Coming soon</span>
+      </div>
+      <div class="preview-card">
+        <p class="preview-stream">Post Four</p>
+        <h4 class="preview-title">Coaching and the Broader Literature on Change: Beyond Self-Awareness</h4>
+        <p class="preview-excerpt">Where coaching sits in relation to the wider field of change — and why it must be understood as more than a vehicle for self-awareness.</p>
+        <span class="preview-coming">Coming soon</span>
+      </div>
+    </div>
+  </div>
+</section>
+
+
+<!-- ══════════════════════════════════════════
+     CONTACT
+══════════════════════════════════════════ -->
+<section id="contact">
+
+  <div class="page-header">
+    <div class="page-header-left">
+      <p class="page-eyebrow">Contact</p>
+      <h1 class="page-title">Begin a<br><em>conversation</em></h1>
+    </div>
+    <div class="page-header-right">
+      <span style="flex:1;font-family:var(--serif);font-size:1.15rem;font-weight:300;font-style:italic;color:var(--mid);line-height:1.65">
+        Whether you are considering coaching, an organisational engagement, or want to be in touch about the writing — please use the form below.
+      </span>
+      <div class="page-tree-container">
+        <svg viewBox="0 0 140 180" xmlns="http://www.w3.org/2000/svg">
+          <defs>
+            <linearGradient id="treeLeafG" x1="0%" y1="0%" x2="100%" y2="100%">
+              <stop offset="0%" style="stop-color:#8A9D78;stop-opacity:0.5"/>
+              <stop offset="100%" style="stop-color:#6A8260;stop-opacity:0.25"/>
+            </linearGradient>
+            <linearGradient id="treeLeafH" x1="0%" y1="0%" x2="100%" y2="100%">
+              <stop offset="0%" style="stop-color:#9DAE8C;stop-opacity:0.4"/>
+              <stop offset="100%" style="stop-color:#7A8C6E;stop-opacity:0.18"/>
+            </linearGradient>
+          </defs>
+          <path d="M70 175 Q70 152 70 135 Q70 118 70 100 Q70 84 70 68" stroke="#8A9D78" stroke-width="2.1" fill="none" stroke-opacity="0.44"/>
+          <path d="M70 175 Q53 168 38 174" stroke="#8A9D78" stroke-width="1.1" fill="none" stroke-opacity="0.3"/>
+          <path d="M70 175 Q87 168 102 174" stroke="#8A9D78" stroke-width="1.1" fill="none" stroke-opacity="0.3"/>
+          <path d="M70 175 Q60 172 47 178" stroke="#8A9D78" stroke-width="0.7" fill="none" stroke-opacity="0.2"/>
+          <path d="M70 175 Q80 172 93 178" stroke="#8A9D78" stroke-width="0.7" fill="none" stroke-opacity="0.2"/>
+          <path d="M70 148 Q50 139 33 145" stroke="#8A9D78" stroke-width="1.1" fill="none" stroke-opacity="0.37"/>
+          <path d="M70 148 Q90 139 107 145" stroke="#8A9D78" stroke-width="1.1" fill="none" stroke-opacity="0.37"/>
+          <path d="M33 145 Q18 132 22 120 Q30 113 42 124 Q46 135 33 145" fill="url(#treeLeafG)" stroke="#7A8C6E" stroke-width="0.6" stroke-opacity="0.35"/>
+          <path d="M107 145 Q122 132 118 120 Q110 113 98 124 Q94 135 107 145" fill="url(#treeLeafH)" stroke="#7A8C6E" stroke-width="0.6" stroke-opacity="0.3"/>
+          <path d="M70 125 Q53 116 37 120" stroke="#8A9D78" stroke-width="0.95" fill="none" stroke-opacity="0.33"/>
+          <path d="M70 125 Q87 116 103 120" stroke="#8A9D78" stroke-width="0.95" fill="none" stroke-opacity="0.33"/>
+          <path d="M37 120 Q24 110 27 98 Q34 91 46 102 Q49 113 37 120" fill="url(#treeLeafH)" stroke="#7A8C6E" stroke-width="0.5" stroke-opacity="0.28"/>
+          <path d="M103 120 Q116 110 113 98 Q106 91 94 102 Q91 113 103 120" fill="url(#treeLeafG)" stroke="#7A8C6E" stroke-width="0.5" stroke-opacity="0.3"/>
+          <path d="M70 103 Q57 95 45 98" stroke="#8A9D78" stroke-width="0.85" fill="none" stroke-opacity="0.29"/>
+          <path d="M70 103 Q83 95 95 98" stroke="#8A9D78" stroke-width="0.85" fill="none" stroke-opacity="0.29"/>
+          <path d="M45 98 Q34 88 37 78 Q44 71 55 81 Q58 91 45 98" fill="url(#treeLeafG)" stroke="#7A8C6E" stroke-width="0.5" stroke-opacity="0.27"/>
+          <path d="M95 98 Q106 88 103 78 Q96 71 85 81 Q82 91 95 98" fill="url(#treeLeafH)" stroke="#7A8C6E" stroke-width="0.5" stroke-opacity="0.25"/>
+          <path d="M70 82 Q57 68 59 56 Q66 49 75 59 Q77 71 70 82" fill="url(#treeLeafG)" stroke="#7A8C6E" stroke-width="0.55" stroke-opacity="0.35"/>
+          <path d="M70 82 Q83 68 81 56 Q74 49 65 59 Q63 71 70 82" fill="url(#treeLeafH)" stroke="#7A8C6E" stroke-width="0.55" stroke-opacity="0.3"/>
+          <circle cx="70" cy="48" r="5.2" fill="#8A9D78" fill-opacity="0.4"/>
+          <circle cx="70" cy="48" r="2.8" fill="#7A8C6E" fill-opacity="0.6"/>
+          <circle cx="20" cy="117" r="1.1" fill="#C4A882" fill-opacity="0.4"/>
+          <circle cx="120" cy="117" r="1.1" fill="#C4A882" fill-opacity="0.4"/>
+          <circle cx="35" cy="90" r="1" fill="#C4A882" fill-opacity="0.32"/>
+          <circle cx="105" cy="90" r="1" fill="#C4A882" fill-opacity="0.32"/>
+        </svg>
+      </div>
+    </div>
+  </div>
+
+  <div class="contact-layout">
+    <div class="contact-info">
+      <h2>Get in<br><em>touch</em></h2>
+      <p>I work with a small number of clients at any one time in order to give each engagement the depth and attention it deserves. If you are considering working together, please use the form to share a little about your context and I will respond directly.</p>
+      <div class="contact-detail">
+        <div class="contact-item">
+          <span class="contact-item-label">Based in</span>
+          <span class="contact-item-value">Singapore · Consulting internationally</span>
+        </div>
+        <div class="contact-item">
+          <span class="contact-item-label">Practice</span>
+          <span class="contact-item-value">Crésca Consulting Pte Ltd</span>
+        </div>
+        <div class="contact-item">
+          <span class="contact-item-label">Writing</span>
+          <span class="contact-item-value">The Backstage of Becoming · Substack</span>
+        </div>
+      </div>
+    </div>
+    <div>
+      <div class="form-field">
+        <label>Your Name</label>
+        <input type="text" placeholder="Full name">
+      </div>
+      <div class="form-field">
+        <label>Organisation</label>
+        <input type="text" placeholder="Organisation or institution">
+      </div>
+      <div class="form-field">
+        <label>Email</label>
+        <input type="email" placeholder="your@email.com">
+      </div>
+      <div class="form-field">
+        <label>I am reaching out about</label>
+        <select>
+          <option value="">Select...</option>
+          <option>Individual Executive Coaching</option>
+          <option>Team or Organisational Work</option>
+          <option>The Writing / Substack</option>
+          <option>Speaking or Workshop</option>
+          <option>Something else</option>
+        </select>
+      </div>
+      <div class="form-field">
+        <label>Message</label>
+        <textarea placeholder="Please share a little about your context and what you are looking for..."></textarea>
+      </div>
+      <button class="form-submit">Send Message</button>
+    </div>
+  </div>
+</section>
+
+
+<!-- FOOTER — Singapore only here -->
 <footer>
   <div class="footer-brand">
     <span class="footer-name">Kavitha Iyer</span>
     <span class="footer-entity">Crésca Consulting Pte Ltd · Singapore</span>
   </div>
   <ul class="footer-links">
-    <li><a href="/about">About</a></li>
-    <li><a href="/work">Work With Me</a></li>
-    <li><a href="/writing">Writing</a></li>
-    <li><a href="/contact">Contact</a></li>
+    <li><a onclick="showSection('about')">About</a></li>
+    <li><a onclick="showSection('work')">Work With Me</a></li>
+    <li><a onclick="showSection('writing')">Writing</a></li>
+    <li><a onclick="showSection('contact')">Contact</a></li>
   </ul>
   <span class="footer-copy">© 2026 Crésca Consulting Pte Ltd</span>
 </footer>
 
+
+<script>
+  function showSection(id) {
+    document.querySelectorAll('section').forEach(s => s.classList.remove('active'));
+    const target = document.getElementById(id);
+    if (target) {
+      target.classList.add('active');
+      window.scrollTo({ top: 0, behavior: 'smooth' });
+    }
+  }
+</script>
 </body>
 </html>
