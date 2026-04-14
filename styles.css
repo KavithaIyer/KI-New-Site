@@ -14,6 +14,7 @@
   }
 
   *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+  a { text-decoration: none; color: inherit; }
   html { scroll-behavior: smooth; }
 
   body {
@@ -60,6 +61,7 @@
     font-size: 0.68rem; font-weight: 500; letter-spacing: 0.14em;
     text-transform: uppercase; color: var(--cream); background: var(--charcoal);
     padding: 0.6rem 1.4rem; cursor: pointer; border: none; transition: background 0.2s;
+    text-decoration: none;
   }
   .nav-cta:hover { background: var(--accent); }
 
