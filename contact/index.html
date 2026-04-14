@@ -99,10 +99,8 @@
         </div>
       </div>
     </div>
-    <form action="https://api.web3forms.com/submit" method="POST">
-      <input type="hidden" name="access_key" value="fcd133b1-0ce7-407e-8de6-db3653afa8a4">
-      <input type="hidden" name="subject" value="New enquiry from kavithaiyer.com">
-      <input type="hidden" name="redirect" value="https://www.kavithaiyer.com/thank-you">
+    <form id="contact-form">
+      <input type="checkbox" name="botcheck" style="display:none">
       <div class="form-field">
         <label>Your Name</label>
         <input type="text" name="name" placeholder="Full name" required>
@@ -132,6 +130,25 @@
       </div>
       <button type="submit" class="form-submit">Send Message</button>
     </form>
+    <script>
+      document.getElementById('contact-form').addEventListener('submit', function(e) {
+        e.preventDefault();
+        var form = e.target;
+        var data = new FormData(form);
+        data.append('access_key', 'fcd133b1-0ce7-407e-8de6-db3653afa8a4');
+        data.append('subject', 'New enquiry from kavithaiyer.com');
+        fetch('https://api.web3forms.com/submit', {
+          method: 'POST',
+          body: data
+        }).then(function(res) {
+          return res.json();
+        }).then(function(result) {
+          if (result.success) {
+            window.location.href = '/thank-you';
+          }
+        });
+      });
+    </script>
   </div>
 </section>
 
