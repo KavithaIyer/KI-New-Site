@@ -576,10 +576,25 @@
   /* ── RESPONSIVE ── */
   @media (max-width: 1100px) {
     .hero { grid-template-columns: 1fr 1fr; }
-    .hero-visual { display: none; }
+    .hero-visual {
+      grid-column: 1 / -1;
+      order: -1;
+      height: 260px;
+      border-right: none;
+      border-bottom: 1px solid var(--rule);
+    }
+    .hero-visual-caption { bottom: 1rem; font-size: 0.72rem; }
   }
   @media (max-width: 820px) {
     .hero { grid-template-columns: 1fr; }
+    .hero-visual {
+      display: flex;
+      order: -1;
+      height: 220px;
+      border-right: none;
+      border-bottom: 1px solid var(--rule);
+    }
+    .hero-visual-caption { bottom: 1rem; font-size: 0.72rem; }
     .hero-left { border-right: none; border-bottom: 1px solid var(--rule); padding: 4rem 6vw; }
     .hero-right { padding: 3rem 6vw; }
     .testimonial-strip { grid-template-columns: 1fr; gap: 1rem; }
