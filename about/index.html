@@ -130,7 +130,21 @@
     <li><a href="/writing">Writing</a></li>
   </ul>
   <a class="nav-cta" href="/contact">Get in Touch</a>
+  <button class="nav-toggle" type="button" aria-expanded="false" aria-controls="mobile-menu" aria-label="Open menu">
+    <span class="nav-toggle-bar" aria-hidden="true"></span>
+    <span class="nav-toggle-bar" aria-hidden="true"></span>
+    <span class="nav-toggle-bar" aria-hidden="true"></span>
+  </button>
 </nav>
+<div class="mobile-menu" id="mobile-menu" aria-hidden="true">
+  <ul class="mobile-menu-links">
+    <li><a href="/">Home</a></li>
+    <li><a href="/about">About</a></li>
+    <li><a href="/work">Work With Me</a></li>
+    <li><a href="/writing">Writing</a></li>
+  </ul>
+  <a class="mobile-menu-cta" href="/contact">Get in Touch</a>
+</div>
 
 <section id="about">
 
@@ -285,5 +299,6 @@
   <span class="footer-copy">© 2026 Crésca Consulting Pte Ltd</span>
 </footer>
 
+<script src="/nav.js" defer></script>
 </body>
 </html>
