@@ -421,6 +421,21 @@
   .client-list div { white-space: normal; }
   .client-sep { margin: 0 0.55rem; color: var(--rule); }
 
+  /* Bio photo: floats next to prose on desktop, sits above heading on mobile */
+  .bio-photo {
+    float: right;
+    margin: 0 0 2rem 2.5rem;
+    width: 200px;
+  }
+  .bio-photo img {
+    width: 200px;
+    height: 240px;
+    object-fit: cover;
+    object-position: center top;
+    border: 1px solid var(--rule);
+    display: block;
+  }
+
   /* ══════════════════════════════════════════
      WORK
   ══════════════════════════════════════════ */
@@ -693,6 +708,12 @@
     .credential-grid { grid-template-columns: 1fr; }
     .nav-toggle { display: flex; }
     .nav-cta { display: none; }
+    .bio-photo {
+      float: none;
+      width: 160px;
+      margin: 0 0 1.75rem;
+    }
+    .bio-photo img { width: 160px; height: 192px; }
   }
 
   @media (min-width: 821px) {
